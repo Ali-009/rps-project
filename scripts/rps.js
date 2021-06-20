@@ -2,6 +2,7 @@
 
 The above code was an initial test */
 
+//generate a random value for Rock, Paper, Scissors
 function computerPlay(){
   let choice = 0;
 
@@ -24,6 +25,7 @@ function computerPlay(){
   }
 }
 
+//Play a round of RPS
 function playRound(playerSelection, computerSelection){
 
   /* Changing user input to toLowerCase
@@ -58,14 +60,57 @@ function playRound(playerSelection, computerSelection){
 
   }
 
-//Returning the result of the function
-  if(result === "draw"){
-    return `The match resulted in a ${result}`;
+//Returning the result of the function as a string
+if(result === "draw"){
+    console.log(`The match resulted in a ${result}`);
   } else if(result === "win"){
-    return `You ${result}, ${playerSelection} beats ${computerSelection}`;
+    console.log(`You ${result}, ${playerSelection} beats ${computerSelection}`);
   } else if(result === "lose"){
-    return `You ${result}, ${computerSelection} beats ${playerSelection}`;
+    console.log(`You ${result}, ${computerSelection} beats ${playerSelection}`);
   }
+
+  //Returning the result
+  return result;
+
+}
+
+//This function runs five rounds of the game
+function game(){
+
+  let playerSelection;
+  let computerSelection;
+
+  //roundResult stores the value of every round as a string
+  let roundResult;
+
+  //finalResult is the total wins from playing five rounds
+  let finalResult = 0;
+
+
+  for(let i=0; i < 5; i++){
+
+    //The player and the computer select a value every round
+    playerSelection = prompt("Let's Play Rock, Paper and Scissors!");
+    computerSelection = computerPlay();
+
+    //Updating roundResult based on game rules
+    roundResult = playRound(playerSelection, computerSelection);
+    //iteratively evaluating finalResult
+    finalResult = (roundResult === "win" ? ++finalResult : finalResult );
+
+    /*Important lesson learned above is
+    that pre-fix (++x) returns the incremented value, while post-fix doesn't */
+
+    /* Using the wrong increment for finalResult lead to it's value not changing
+    at all */
+
+    //Testing the value of finalResult
+    //console.log(finalResult);
+
+  }
+
+  //Printing the finalResult
+  console.log(`You have won ${finalResult} rounds out of 5.`);
 
 }
 
@@ -73,7 +118,10 @@ function playRound(playerSelection, computerSelection){
 console.log(computerPlay()); */
 
 //Testing playRound
-let playerSelection = prompt("Let's Play Rock, Paper and Scissors!");
+/* let playerSelection = prompt("Let's Play Rock, Paper and Scissors!");
 let computerSelection = computerPlay();
 
-console.log(playRound(playerSelection, computerSelection));
+console.log(playRound(playerSelection, computerSelection)); */
+
+//Run the function game() to play five rounds of RPS
+game();
