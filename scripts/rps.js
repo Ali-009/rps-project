@@ -1,6 +1,3 @@
-/*console.log("Hello World!");
-
-The above code was an initial test */
 
 //generate a random value for Rock, Paper, Scissors
 function computerPlay(){
@@ -25,21 +22,13 @@ function computerPlay(){
   }
 }
 
-//Play a round of RPS
+//Play a round. Note that this function never takes invalid values as arguments
+//This is the function that basically holds the rules of the game
 function playRound(playerSelection, computerSelection){
 
-  /* Changing user input to toLowerCase
-  in order to make it case-insensitive */
-  playerSelection = playerSelection.toLowerCase();
 
   //A variable to hold a value based on the player winning or losing
-  let result = "draw";
-
-  //In case of invalid input
-  if(playerSelection != "rock" && playerSelection != "paper"
-      && playerSelection != "scissors"){
-        return "Please input either rock, paper or scissors";
-      }
+  let result;
 
   //The basic rules of the game written in if-else resultments
   if(playerSelection === computerSelection){
@@ -83,45 +72,55 @@ function game(){
   //roundResult stores the value of every round as a string
   let roundResult;
 
-  //finalResult is the total wins from playing five rounds
-  let finalResult = 0;
+  //The player and computer total wins from playing five rounds
+  let playerResult = 0;
+  let computerResult = 0;
 
 
   for(let i=0; i < 5; i++){
 
     //The player and the computer select a value every round
-    playerSelection = prompt("Let's Play Rock, Paper and Scissors!");
+    //The player's value is tested
+    do{
+
+    playerSelection = prompt("Let's Play Rock, Paper, Scissors!");
+    //setting the selection to lowercase
+    playerSelection = playerSelection.toLowerCase();
+
+    //Anything that isn't valid is equivalent to undefined
+    if(playerSelection != "rock" && playerSelection != "paper"
+        && playerSelection != "scissors"){
+          playerSelection = undefined;
+          alert("Please insert rock, paper, or scissors")
+        }
+
+    }while(playerSelection === undefined);
+
     computerSelection = computerPlay();
 
     //Updating roundResult based on game rules
     roundResult = playRound(playerSelection, computerSelection);
-    //iteratively evaluating finalResult
-    finalResult = (roundResult === "win" ? ++finalResult : finalResult );
 
-    /*Important lesson learned above is
-    that pre-fix (++x) returns the incremented value, while post-fix doesn't */
-
-    /* Using the wrong increment for finalResult lead to it's value not changing
-    at all */
-
-    //Testing the value of finalResult
-    //console.log(finalResult);
+    //if the round is won by the player, increment their result
+    //otherwise if it was lost, increment the computer's result
+    //else return nothing
+    roundResult === "win" ? playerResult++ :
+    roundResult === "lose" ? computerResult++ :
+    null;
 
   }
 
-  //Printing the finalResult
-  console.log(`You have won ${finalResult} rounds out of 5.`);
+  console.log(`Your result is ${playerResult}, compared to the computer's result of ${computerResult}`);
+
+  if(playerResult > computerResult){
+    console.log("Congrats! You won.");
+  } else if (playerResult < computerResult){
+    console.log("You lost. Better luck next time.");
+  } else {
+    console.log("It's a tie!");
+  }
 
 }
-
-/*Testing computerPlay() function
-console.log(computerPlay()); */
-
-//Testing playRound
-/* let playerSelection = prompt("Let's Play Rock, Paper and Scissors!");
-let computerSelection = computerPlay();
-
-console.log(playRound(playerSelection, computerSelection)); */
 
 //Run the function game() to play five rounds of RPS
 game();
