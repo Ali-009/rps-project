@@ -11,18 +11,18 @@ function computerPlay(){
   //Switch statement that outputs either Rock, Paper or Scissors
   switch(choice){
     case 0:
-      console.log("Rock");
+      return "Rock";
       break;
     case 1:
-      console.log("Paper");
+      return "Paper";
       break;
     case 2:
-      console.log("Scissors");
+      return "Scissors";
       break;
     default:
-      console.log("Error");
+      return "Error";
   }
 }
 
 //Testing computerPlay() function
-computerPlay();
+console.log(computerPlay());
