@@ -44,21 +44,13 @@ function playRound(playerSelection, computerSelection){
   let result;
 
   if(playerSelection === computerSelection){
-
     result = "draw";
-
   } else if(playerSelection === "rock"){
-
     result = (computerSelection === "scissors" ? "win" : "lose");
-
   } else if(playerSelection === "paper"){
-
     result = (computerSelection === "rock" ? "win" : "lose");
-
   } else if(playerSelection === "scissors"){
-
     result = (computerSelection === "paper" ? "win" : "lose");
-
   }
 
   return result;
@@ -93,10 +85,10 @@ function game(){
 
   let playerSelection;
   let computerSelection;
-  let roundResult;
 
   let playerResult = 0;
   let computerResult = 0;
+  let roundResult;
 
   for(let i=0; i < 5; i++){
 
