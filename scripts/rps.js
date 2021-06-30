@@ -65,7 +65,7 @@ function playRound(playerSelection, computerSelection){
 
 }
 
-function printRoundResult(result, playerSelection, computerSelection){
+function printRoundResult(playerSelection, computerSelection, result){
 
   if(result === "draw"){
     console.log(`The match resulted in a ${result}`);
@@ -78,8 +78,6 @@ function printRoundResult(result, playerSelection, computerSelection){
 }
 
 function determineWinner(playerResult, computerResult){
-
-  console.log(`Your result is ${playerResult}, compared to the computer's result of ${computerResult}`);
 
   if(playerResult > computerResult){
     console.log("Congrats! You won.");
@@ -106,7 +104,7 @@ function game(){
     computerSelection = computerPlay();
 
     roundResult = playRound(playerSelection, computerSelection);
-    printRoundResult(roundResult, playerSelection, computerSelection);
+    printRoundResult(playerSelection, computerSelection, roundResult);
 
     if(roundResult === "win"){
       playerResult++;
@@ -116,6 +114,8 @@ function game(){
       continue;
     }
   }
+
+  console.log(`Your result is ${playerResult}, compared to the computer's result of ${computerResult}`);
 
   determineWinner(playerResult, computerResult);
 
