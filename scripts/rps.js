@@ -26,7 +26,6 @@ function playerPlay(){
   let playerSelection;
 
   playerSelection = prompt("Let's Play Rock, Paper, Scissors!");
-  playerSelection = playerSelection.toLowerCase();
 
   //Recursion in case of invalid input, otherwise return input
   if(playerSelection !== "rock" && playerSelection !== "paper"
@@ -34,7 +33,7 @@ function playerPlay(){
       alert("Please Insert Rock Paper Or Scissors");
       return playerPlay();
   } else{
-    return playerSelection;
+    return playerSelection.toLowerCase();;
   }
 
 }
@@ -62,6 +61,12 @@ function playRound(playerSelection, computerSelection){
 
   }
 
+  return result;
+
+}
+
+function printRoundResult(result, playerSelection, computerSelection){
+
   if(result === "draw"){
     console.log(`The match resulted in a ${result}`);
   } else if(result === "win"){
@@ -69,8 +74,6 @@ function playRound(playerSelection, computerSelection){
   } else if(result === "lose"){
     console.log(`You ${result}, ${computerSelection} beats ${playerSelection}`);
   }
-
-  return result;
 
 }
 
@@ -97,13 +100,13 @@ function game(){
   let playerResult = 0;
   let computerResult = 0;
 
-
   for(let i=0; i < 5; i++){
 
     playerSelection = playerPlay();
     computerSelection = computerPlay();
 
     roundResult = playRound(playerSelection, computerSelection);
+    printRoundResult(roundResult, playerSelection, computerSelection);
 
     if(roundResult === "win"){
       playerResult++;
@@ -115,7 +118,6 @@ function game(){
   }
 
   determineWinner(playerResult, computerResult);
-
 
 }
 
