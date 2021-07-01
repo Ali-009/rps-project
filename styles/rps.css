@@ -1,0 +1,16 @@
+
+.playerText{
+  display: inline;
+}
+
+#playerScore{
+  display: inline;
+}
+
+#computerScore{
+  display: inline;
+}
+
+#score{
+  margin-top: 10px
+}

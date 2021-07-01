@@ -21,25 +21,19 @@ function computerPlay(){
   }
 }
 
-function playerPlay(){
+//The function that holds the game's basic rules
+function playRound(e){
 
-  let playerSelection;
+  let playerScore = document.querySelector("#playerScore");
+  let computerScore = document.querySelector("#computerScore");
 
-  playerSelection = prompt("Let's Play Rock, Paper, Scissors!");
-
-  //Recursion in case of invalid input, otherwise return input
-  if(playerSelection !== "rock" && playerSelection !== "paper"
-    && playerSelection !== "scissors"){
-      alert("Please Insert Rock Paper Or Scissors");
-      return playerPlay();
-  } else{
-    return playerSelection.toLowerCase();;
+  if(+playerScore.textContent >= 5 || +computerScore.textContent >= 5){
+    playerScore.textContent = "0";
+    computerScore.textContent = "0";
   }
 
-}
-
-//The function that holds the game's basic rules
-function playRound(playerSelection, computerSelection){
+  let computerSelection = computerPlay();
+  let playerSelection = e.target.textContent.toLowerCase();
 
   let result;
 
@@ -53,65 +47,78 @@ function playRound(playerSelection, computerSelection){
     result = (computerSelection === "paper" ? "win" : "lose");
   }
 
-  return result;
+  printRoundResult(playerSelection, computerSelection, result);
+  updateScore(result);
 
 }
 
 function printRoundResult(playerSelection, computerSelection, result){
 
+  let resultDiv = document.querySelector('#results');
+
+  let resultText = document.querySelector('#results > p');
+
+  if(resultText){
+    resultDiv.removeChild(resultText);
+  }
+
+  resultText = document.createElement('p');
+
+
   if(result === "draw"){
-    console.log(`The match resulted in a ${result}`);
+    resultText.textContent = `The match resulted in a ${result}`;
   } else if(result === "win"){
-    console.log(`You ${result}, ${playerSelection} beats ${computerSelection}`);
+    resultText.textContent = `You ${result}, ${playerSelection} beats ${computerSelection}`;
   } else if(result === "lose"){
-    console.log(`You ${result}, ${computerSelection} beats ${playerSelection}`);
+    resultText.textContent = `You ${result}, ${computerSelection} beats ${playerSelection}`;
   }
+
+  resultDiv.appendChild(resultText);
 
 }
 
-function determineWinner(playerResult, computerResult){
+function updateScore(result){
 
-  if(playerResult > computerResult){
-    console.log("Congrats! You won.");
-  } else if (playerResult < computerResult){
-    console.log("You lost. Better luck next time.");
-  } else {
-    console.log("It's a tie!");
+  let playerScore = document.querySelector("#playerScore");
+  let computerScore = document.querySelector("#computerScore");
+
+  if(result === "win"){
+    playerScore.textContent = (+playerScore.textContent) + 1;
+  } else if(result === "lose"){
+    computerScore.textContent = (+computerScore.textContent) + 1;
   }
+
+  checkWinner(playerScore, computerScore);
+
 }
 
-//This function runs five rounds of the game
+function checkWinner(playerScore, computerScore){
+
+  let winner = document.createElement('p');
+  winner.setAttribute('id', "winner");
+
+  if(playerScore.textContent === "5"){
+    winner.textContent = "Congrats! You Win";
+  } else if(computerScore.textContent === "5"){
+    winner.textContent = "The computer won. Better luck next time.";
+  }
+
+  document.querySelector("#score").appendChild(winner);
+
+}
+
+
 function game(){
 
-  let playerSelection;
-  let computerSelection;
+  let computerSelection = computerPlay();
 
-  let playerResult = 0;
-  let computerResult = 0;
-  let roundResult;
+  let buttons = document.querySelectorAll('button');
 
-  for(let i=0; i < 5; i++){
 
-    playerSelection = playerPlay();
-    computerSelection = computerPlay();
-
-    roundResult = playRound(playerSelection, computerSelection);
-    printRoundResult(playerSelection, computerSelection, roundResult);
-
-    if(roundResult === "win"){
-      playerResult++;
-    } else if(roundResult === "lose") {
-      computerResult++;
-    } else {
-      continue;
-    }
-  }
-
-  console.log(`Your result is ${playerResult}, compared to the computer's result of ${computerResult}`);
-
-  determineWinner(playerResult, computerResult);
+  buttons.forEach(
+    (button) => button.addEventListener('click', playRound)
+  );
 
 }
 
-//Run the function game() to play five rounds of RPS
 game();
